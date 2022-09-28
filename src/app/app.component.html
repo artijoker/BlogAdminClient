@@ -1,0 +1,18 @@
+<div  *ngIf="(isAuthorized) === true" class="header bg-dark d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-3">
+
+	<ul class="nav col-10 col-md-auto mb-2 justify-content-center mb-md-0 ms-5">
+		<li><a routerLink="/blog" class="nav-link px-2 link-primary text-white">Публикации</a></li>
+		<li><a routerLink="/accounts" class="nav-link px-2 link-primary text-white">Пользователи</a></li>
+		<li><a routerLink="/categories" class="nav-link px-2 link-primary text-white">Категории</a></li>
+	</ul>
+
+
+	<div class="col-md-5 text-end m-2 me-5">
+		<button type="button" class="btn btn-primary me-3" (click)="addPost()">+ Добавить статью</button>
+        <button type="button" class="btn btn-primary me-3" (click)="myPosts()">Мои статьи</button>
+		<button type="button" class="btn btn-primary me-3" (click)="myProfile()">Профиль</button>
+		<button type="button" class="btn btn-primary me-3" (click)="exit()">Выйти</button>
+
+	</div>
+</div>
+<router-outlet></router-outlet>

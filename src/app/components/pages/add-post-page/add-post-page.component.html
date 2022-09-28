@@ -1,0 +1,33 @@
+<div class="container">
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="titleId">Заголовок</label>
+            <input type="text" id="titleId" [(ngModel)]="title" class="form-control" required/>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="anonsId">Аннонс</label>
+            <input type="text" id="anonsId" [(ngModel)]="anons" class="form-control" required/>
+        </div>
+
+    <div class="form-outline mb-4">
+        <label class="form-label" for="categoryId">Категория</label>
+        <br/>
+        <select class="form-select w-25"
+                 id="categoryId" [(ngModel)]="selectedCategory" (ngModelChange)="onChange($event)">
+            <option *ngFor="let category of categories" [ngValue]="category"> {{category.name}} </option>
+        </select>
+    </div>
+
+
+    <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
+<!--    <h5 class="html-header">HTML Output</h5>-->
+<!--    <div class="html">{{ htmlContent }}</div>-->
+
+
+
+    <div class="m-3 d-flex justify-content-center">
+        <button class="btn btn-primary me-5  my-shadow border-dark" (click)="saveAsDraft()">Сохранить как черновик</button>
+        <button class="btn btn-primary  my-shadow border-dark" (click)="saveAndPublished()">Сохранить и опубликовать</button>
+    </div>
+</div>

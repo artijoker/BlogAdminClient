@@ -1,0 +1,41 @@
+<div class="">
+    <ul class="nav d-flex justify-content-center mb-md-0">
+        <li><a routerLink="/my-posts/draft-posts" class="nav-link px-2 link-primary text-dark">Черновики</a></li>
+        <li><a routerLink="/my-posts/published-posts" class="nav-link px-2 link-primary text-dark">Опубликованные</a>
+        </li>
+        <li><a routerLink="/my-posts/pending-posts" class="nav-link px-2 link-primary text-dark">На модерации</a></li>
+        <li><a routerLink="/my-posts/rejected-posts" class="nav-link px-2 link-primary text-dark">Отклоненные</a></li>
+    </ul>
+    <div *ngIf="posts === undefined">
+        <div class="p-5 d-flex justify-content-center align-content-center">
+            <div class="spinner-border" role="status">
+            </div>
+        </div>
+    </div>
+    <div *ngIf="posts !== undefined">
+        <div *ngIf="posts.length > 0">
+            <div class="d-flex justify-content-center">
+                <div class="w-75">
+                    <div *ngFor="let post of posts">
+                        <div (click)="goToPost(post.id)" class="bg-light p-5 rounded m-5 my-shadow">
+                            <strong class="d-inline-block mb-2 text-success">{{post?.categoryName}}</strong>
+                            <h4  class="text-ellipsis">{{post?.title}}</h4>
+                            <p  class="text-ellipsis">{{post?.anons}}</p>
+                            <a (click)="editPost(post.id)" class="btn btn-lg btn-primary m-2 my-shadow " role="button">Редактировать</a>
+                            <a (click)="sendPostToDraft(post.id, $event)" class="btn btn-lg btn-primary m-2 my-shadow"
+                               role="button">Переместить
+                                в черновики</a>
+                            <a (click)="deletePost(post.id, $event)" class="btn btn-lg btn-danger m-2 my-shadow"
+                               role="button">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="posts.length === 0" class="d-flex justify-content-center h4 mt-5">
+            Нет записей
+        </div>
+    </div>
+
+
+</div>

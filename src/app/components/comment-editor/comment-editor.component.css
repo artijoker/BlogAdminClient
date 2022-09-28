@@ -1,0 +1,8 @@
+.comment-editor{
+    
+    padding: 20px;
+}
+
+textarea{
+    resize: none;
+}

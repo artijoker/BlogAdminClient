@@ -1,0 +1,56 @@
+<div class="me-5 ms-5">
+    <div *ngIf="isLoadPost === true">
+        <div class="p-5 d-flex justify-content-center align-content-center">
+            <div class="spinner-border" role="status">
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isLoadPost === false">
+
+        <div *ngIf="posts.length > 0">
+            <table class="table table-striped">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th role="button" class="link-primary text-white" (click)="sortTitle()" scope="col">Заголовок</th>
+                    <th role="button" class="link-primary text-white" (click)="sortAuthor()" scope="col">Автор</th>
+                    <th role="button" class="link-primary text-white" (click)="sortCategory()" scope="col">Категория</th>
+                    <th role="button" class="link-primary text-white" (click)="sortDate()" scope="col">Дата</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr role="button" class="border-dark" (click)="goToPost(post.id)" style="vertical-align: middle"
+                    *ngFor="let post of posts; index as i">
+                    <th style="width: 50px"  scope="row">{{i + 1}}</th>
+                    <td class="ellipsis"><span>{{post.title}}</span> </td>
+                    <td class="ellipsis"><span>{{post.accountLogin}}</span></td>
+                    <td class="ellipsis"><span>{{post.categoryName}}</span></td>
+                    <td style="width: 150px" >{{post.lastChange | date:'dd.MM.yyyy HH:mm'}}</td>
+                    <td style="width: 80px" >
+                        <div class="d-flex justify-content-center">
+                            <div (click)="goToPostEditor(post.id)" class="p-2 me-2 btn btn-primary my-shadow border-dark">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
+                                     class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div *ngIf="posts.length === 0" class="d-flex justify-content-center h4">
+            Нет записей
+        </div>
+    </div>
+</div>
+
+
+

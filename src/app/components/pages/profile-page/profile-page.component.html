@@ -1,0 +1,21 @@
+<div *ngIf="accountMode !== undefined && accountMode !== null" class="col-7  ms-5">
+    <h2 class="mb-3">Профиль</h2>
+
+    <div  class="bg-dark p-5 rounded text-white">
+        <div class="mb-3">
+            Email: {{accountMode.email}}
+        </div>
+        <div class="mb-3">
+            Логин/Ник: {{accountMode.login}}
+        </div>
+
+        <div class="mb-3">
+            Дата регистрации: {{accountMode.registered}}
+        </div>
+        <div class="mb-5">
+            Опубликовано статей: {{accountMode.quantityPosts}}
+        </div>
+        <button (click)="editAccount()" class="w-100 btn btn-primary btn-lg" type="submit">Изменить учетные данные</button>
+    </div>
+</div>
+<router-outlet></router-outlet>

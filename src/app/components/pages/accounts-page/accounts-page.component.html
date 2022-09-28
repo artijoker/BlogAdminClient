@@ -1,0 +1,83 @@
+<div class="m-5">
+    <div *ngIf="accounts.length === 0">
+        <div class="p-5 d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+            </div>
+        </div>
+    </div>
+    <div *ngIf="accounts.length > 0">
+        <button (click)="addAccount()" class="p-2 btn btn-primary mb-4 me-2 my-shadow border-dark">
+            + Добавит пользователя
+        </button>
+        <table class="table table-striped" style="vertical-align: middle">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th class="link-primary text-white" scope="col" (click)="sortName()" role="button">Имя</th>
+                <th class="link-primary text-white" scope="col" (click)="sortEmail()" role="button">Email</th>
+                <th class="link-primary text-white" scope="col" (click)="sortRole()" role="button">Роль</th>
+                <th class="link-primary text-white" scope="col" (click)="sortPublishedPosts()" role="button">
+                    Опубликовал статей
+                </th>
+                <th class="link-primary text-white" scope="col" (click)="sortDate()" role="button">Дата регистрации</th>
+                <th class="link-primary text-white" scope="col" (click)="sortBanned()" role="button">Заблокирован</th>
+                <th class="link-primary text-white" scope="col" (click)="sortDeleted()" role="button">Удален</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr (click)="goToPostsByAccountId(account.id)" class="border-dark" role="button"
+                *ngFor="let account of accounts;index as i">
+                <th style="width: 40px" scope="row">{{i + 1}}</th>
+                <td>{{account.login}}</td>
+                <td><span>{{account.email}}</span></td>
+                <td style="width: 80px">{{account.roleName}}</td>
+                <td>{{account.quantityPosts}}</td>
+                <td style="width: 200px">{{account.registered | date:'dd.MM.yyyy HH:mm'}}</td>
+                <td style="width: 100px">{{account.isBanned === true ? 'Да' : 'Нет'}}</td>
+                <td style="width: 80px">{{account.isDeleted === true ? 'Да' : 'Нет'}}</td>
+                <td style="width: 120px">
+                    <div class="d-flex justify-content-center">
+                        <button (click)="editAccount(account.id)"
+                                class="p-2 me-2 btn btn-primary my-shadow border-dark">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
+                                 class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                            </svg>
+                        </button>
+                        <button *ngIf="account.isBanned === false" [disabled]="account.id === 1"
+                                (click)="bannedAccount(account)"
+                                class="p-2 me-2 btn btn-warning my-shadow border-dark">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 640 512">
+                                <path
+                                    d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H392.6c-5.4-9.4-8.6-20.3-8.6-32V352c0-2.1 .1-4.2 .3-6.3c-31-26-71-41.7-114.6-41.7H178.3zM528 240c17.7 0 32 14.3 32 32v48H496V272c0-17.7 14.3-32 32-32zm-80 32v48c-17.7 0-32 14.3-32 32V480c0 17.7 14.3 32 32 32H608c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32V272c0-44.2-35.8-80-80-80s-80 35.8-80 80z"/>
+                            </svg>
+
+                        </button>
+                        <button *ngIf="account.isBanned === true" (click)="unlockAccount(account)"
+                                class="p-2 me-2 btn btn-warning my-shadow border-dark">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 640 512">
+                                <path
+                                    d="M352 128c0 70.7-57.3 128-128 128s-128-57.3-128-128S153.3 0 224 0s128 57.3 128 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4c43.6 0 83.6 15.7 114.6 41.7c-.2 2.1-.3 4.2-.3 6.3V480c0 11.7 3.1 22.6 8.6 32H29.7C13.3 512 0 498.7 0 482.3zM496 272v48h16 48 48c17.7 0 32 14.3 32 32V480c0 17.7-14.3 32-32 32H448c-17.7 0-32-14.3-32-32V352c0-17.7 14.3-32 32-32V272c0-44.2 35.8-80 80-80s80 35.8 80 80H560c0-17.7-14.3-32-32-32s-32 14.3-32 32z"/>
+                            </svg>
+                        </button>
+                        <button [disabled]="(account.isDeleted === true || account.id === 1)"
+                                (click)="deleteAccount(account.id)"
+                                class="p-2 btn btn-danger my-shadow border-dark">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                 class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                </td>
+            </tr>
+            <tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
